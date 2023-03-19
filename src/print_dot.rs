@@ -24,7 +24,7 @@ use crate::graph::GraphVizDiGraph;
 use crate::traits::DotTranslatable;
 
 
-#[derive(Clone, PartialEq, Debug, Eq, Hash)]
+#[derive(IntoStaticStr, Clone, PartialEq, Debug, Eq, Hash)]
 pub enum GraphVizOutputFormat {
     svg,
     png
