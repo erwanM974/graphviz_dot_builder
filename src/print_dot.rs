@@ -24,6 +24,7 @@ use crate::graph::GraphVizDiGraph;
 use crate::traits::DotTranslatable;
 
 
+#[allow(non_camel_case_types)]
 #[derive(IntoStaticStr, Clone, PartialEq, Debug, Eq, Hash)]
 pub enum GraphVizOutputFormat {
     svg,
@@ -49,19 +50,19 @@ pub fn print_dot(output_file_name : String,
         dot_file.write(dot_graph.to_dot_string().as_bytes());
     }
     // ***
-    let output_file_name : String;
+    let output_file_name_with_extension : String;
     let command_format_argument : &str;
     match output_file_format {
         GraphVizOutputFormat::svg => {
-            output_file_name = format!("{:}.svg", output_file_name);
+            output_file_name_with_extension = format!("{:}.svg", output_file_name);
             command_format_argument = "-Tsvg:cairo";
         },
         GraphVizOutputFormat::png => {
-            output_file_name = format!("{:}.png", output_file_name);
+            output_file_name_with_extension = format!("{:}.png", output_file_name);
             command_format_argument = "-Tpng";
         }
     }
-    let output_file_path : PathBuf = [&output_file_name].iter().collect();
+    let output_file_path : PathBuf = [&output_file_name_with_extension].iter().collect();
     // ***
     return std::process::Command::new("dot")
         .arg(command_format_argument)
