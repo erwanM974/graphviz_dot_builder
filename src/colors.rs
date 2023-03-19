@@ -19,6 +19,7 @@ use strum_macros::IntoStaticStr;
 use crate::traits::DotTranslatable;
 
 
+#[allow(non_camel_case_types)]
 #[derive(IntoStaticStr,Eq,PartialEq,Clone)]
 pub enum GraphvizColor {
     aliceblue,antiquewhite,antiquewhite1,antiquewhite2,antiquewhite3,

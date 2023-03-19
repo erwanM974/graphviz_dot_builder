@@ -33,7 +33,7 @@ pub enum GraphVizOutputFormat {
 impl fmt::Display for GraphVizOutputFormat {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let as_static_str : &'static str = self.into();
-        write!(f, as_static_str)
+        write!(f, "{}", as_static_str)
     }
 }
 
