@@ -1,0 +1,18 @@
+[package]
+name = "graphviz_dot_builder"
+version = "0.1.0"
+authors = ["Erwan Mahe"]
+edition = "2021"
+
+license = "Apache-2.0"
+description = "A simple library for generating dot files to obtain images of directed graphs with subgraph clusters"
+
+readme = "README.md"
+repository = "https://github.com/erwanM974/graphviz_dot_builder"
+homepage = "https://github.com/erwanM974/graphviz_dot_builder"
+
+keywords = ["graphviz", "directed graph", "dot", "cluster"]
+
+[dependencies]
+strum = "0.24.1"                                # for IntoStaticStr
+strum_macros = "0.24.3"                         # ...
