@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-use crate::traits::{DotTranslatable, RenameableWithPrefix};
+use crate::traits::{DotTranslatable, RenameableWithPrefix, DotBuildable};
 use crate::edge::edge::GraphVizEdge;
 use crate::item::item::GraphVizGraphItem;
+use crate::item::node::node::GraphVizNode;
 use crate::item::node::style::GraphvizNodeStyle;
+
 
 #[derive(Eq,PartialEq,Clone)]
 pub struct GraphVizCluster {
@@ -60,6 +62,7 @@ impl DotTranslatable for GraphVizCluster {
     }
 }
 
+
 impl RenameableWithPrefix for GraphVizCluster {
     fn rename_with_prefix(&self, prefix: &String) -> Self {
         let new_items : Vec<Box<GraphVizGraphItem>> = self.items.iter().map(
@@ -73,3 +76,19 @@ impl RenameableWithPrefix for GraphVizCluster {
     }
 }
 
+
+impl DotBuildable for GraphVizCluster {
+
+    fn add_node(&mut self, node : GraphVizNode) {
+        self.items.push(Box::new(GraphVizGraphItem::Node(node)));
+    }
+
+    fn add_cluster(&mut self, cluster : GraphVizCluster) {
+        self.items.push(Box::new(GraphVizGraphItem::Cluster(cluster)));
+    }
+
+    fn add_edge(&mut self, edge : GraphVizEdge) {
+        self.edges.push(edge);
+    }
+
+}

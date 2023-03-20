@@ -18,14 +18,15 @@ limitations under the License.
 use crate::edge::edge::GraphVizEdge;
 use crate::item::cluster::GraphVizCluster;
 use crate::item::item::GraphVizGraphItem;
+use crate::item::node::node::GraphVizNode;
 use crate::item::node::style::GraphvizNodeStyle;
-use crate::traits::{DotTranslatable, RenameableWithPrefix};
+use crate::traits::{DotTranslatable, RenameableWithPrefix, DotBuildable};
 
 
 pub struct GraphVizDiGraph {
-    pub clusters : Vec<GraphVizCluster>,
-    pub nodes : Vec<Box<GraphVizGraphItem>>,
-    pub edges : Vec<GraphVizEdge>
+    clusters : Vec<GraphVizCluster>,
+    nodes : Vec<Box<GraphVizGraphItem>>,
+    edges : Vec<GraphVizEdge>
 }
 
 impl GraphVizDiGraph {
@@ -85,5 +86,23 @@ impl DotTranslatable for GraphVizDiGraph {
         res.push_str("\n}");
         return res;
     }
+}
+
+
+
+impl DotBuildable for GraphVizDiGraph {
+
+    fn add_node(&mut self, node : GraphVizNode) {
+        self.nodes.push(Box::new(GraphVizGraphItem::Node(node)));
+    }
+
+    fn add_cluster(&mut self, cluster : GraphVizCluster) {
+        self.clusters.push(cluster);
+    }
+
+    fn add_edge(&mut self, edge : GraphVizEdge) {
+        self.edges.push(edge);
+    }
+
 }
 

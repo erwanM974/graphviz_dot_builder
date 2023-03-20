@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
+use crate::item::node::node::GraphVizNode;
+use crate::item::cluster::GraphVizCluster;
+use crate::edge::edge::GraphVizEdge;
 
 pub trait DotTranslatable {
     fn to_dot_string(&self) -> String;
@@ -23,4 +25,12 @@ pub trait DotTranslatable {
 pub trait RenameableWithPrefix {
     fn rename_with_prefix(&self, prefix : &String) -> Self;
 }
+
+pub trait DotBuildable {
+    fn add_node(&mut self, node : GraphVizNode);
+    fn add_cluster(&mut self, cluster : GraphVizCluster);
+    fn add_edge(&mut self, edge : GraphVizEdge);
+}
+
+
 
