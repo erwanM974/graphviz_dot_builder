@@ -158,6 +158,6 @@ pub enum GraphvizColor {
 impl DotTranslatable for GraphvizColor {
     fn to_dot_string(&self) -> String {
         let as_static_str : &'static str = self.into();
-        return as_static_str.to_string().to_lowercase();
+        as_static_str.to_string().to_lowercase()
     }
 }

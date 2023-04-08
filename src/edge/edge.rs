@@ -35,29 +35,27 @@ impl GraphVizEdge {
             target_node_id : String,
             target_cluster : Option<String>,
                style : GraphvizEdgeStyle) -> GraphVizEdge {
-        return GraphVizEdge{origin_node_id,
+        GraphVizEdge{origin_node_id,
             origin_cluster,
             target_node_id,
             target_cluster,
-            style};
+            style}
     }
 
-    pub fn rename_with_prefix(&self, prefix: &String) -> Self {
+    pub fn rename_with_prefix(&self, prefix: &str) -> Self {
         let new_origin_id = format!("{}{}",prefix,self.origin_node_id);
-        let new_origin_cluster = match &self.origin_cluster {
-            None => None,
-            Some(cluster_id) => Some(format!("{}{}",prefix,cluster_id))
-        };
+        let new_origin_cluster = self.origin_cluster.as_ref()
+            .map(|cluster_id| format!("{}{}",prefix,cluster_id));
+        // ***
         let new_target_id = format!("{}{}",prefix,self.target_node_id);
-        let new_target_cluster = match &self.target_cluster {
-            None => None,
-            Some(cluster_id) => Some(format!("{}{}",prefix,cluster_id))
-        };
-        return GraphVizEdge::new(new_origin_id,
+        let new_target_cluster = self.target_cluster.as_ref()
+            .map(|cluster_id| format!("{}{}",prefix,cluster_id));
+        // ***
+        GraphVizEdge::new(new_origin_id,
                                  new_origin_cluster,
                                  new_target_id,
                                  new_target_cluster,
-                                 self.style.clone());
+                                 self.style.clone())
     }
 }
 
@@ -77,10 +75,12 @@ impl DotTranslatable for GraphVizEdge {
                 style.push(format!("lhead=cluster_{}",cluster_id));
             }
         }
-        if style.len() > 0 {
-            return format!("{}->{} [{}];", self.origin_node_id, self.target_node_id, style.join(","));
+
+        // ***
+        if style.is_empty() {
+            format!("{}->{};", self.origin_node_id, self.target_node_id)
         } else {
-            return format!("{}->{};", self.origin_node_id, self.target_node_id);
+            format!("{}->{} [{}];", self.origin_node_id, self.target_node_id, style.join(","))
         }
     }
 }

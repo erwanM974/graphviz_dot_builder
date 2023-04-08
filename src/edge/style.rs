@@ -27,9 +27,9 @@ pub enum GvArrowHeadFill {
 
 impl DotTranslatable for GvArrowHeadFill {
     fn to_dot_string(&self) -> String {
-        match self {
-            &GvArrowHeadFill::Open => "o".to_string(),
-            &GvArrowHeadFill::Filled => "".to_string(),
+        match *self {
+            GvArrowHeadFill::Open => "o".to_string(),
+            GvArrowHeadFill::Filled => "".to_string(),
         }
     }
 }
@@ -43,10 +43,10 @@ pub enum GvArrowHeadSide {
 
 impl DotTranslatable for GvArrowHeadSide {
     fn to_dot_string(&self) -> String {
-        match self {
-            &GvArrowHeadSide::Left  => "l".to_string(),
-            &GvArrowHeadSide::Right => "r".to_string(),
-            &GvArrowHeadSide::Both  => "".to_string(),
+        match *self {
+            GvArrowHeadSide::Left  => "l".to_string(),
+            GvArrowHeadSide::Right => "r".to_string(),
+            GvArrowHeadSide::Both  => "".to_string(),
         }
     }
 }
@@ -126,7 +126,8 @@ impl DotTranslatable for GvArrowHeadStyle {
             GvArrowHeadStyle::Tee(_)          => res.push_str("tee"),
             GvArrowHeadStyle::Vee(_)          => res.push_str("vee"),
         };
-        return res;
+        // ***
+        res
     }
 }
 
@@ -135,13 +136,14 @@ pub enum GvEdgeLineStyle {
     Solid,
     Dashed,
     Dotted,
-    Bold
+    Bold,
+    Invis
 }
 
 impl DotTranslatable for GvEdgeLineStyle {
     fn to_dot_string(&self) -> String {
         let as_static_str : &'static str = self.into();
-        return as_static_str.to_string().to_lowercase();
+        as_static_str.to_string().to_lowercase()
     }
 }
 
@@ -167,43 +169,32 @@ pub enum GraphvizEdgeStyleItem {
 
 impl DotTranslatable for GraphvizEdgeStyleItem {
     fn to_dot_string(&self) -> String {
-        let mut res = String::new();
         match self {
             GraphvizEdgeStyleItem::LineStyle(ref line_style) => {
-                res.push_str("style=");
-                res.push_str(&(line_style.to_dot_string()));
+                format!("style={:}",line_style.to_dot_string())
             },
             GraphvizEdgeStyleItem::Label(ref label) => {
-                res.push_str("label=\"");
-                res.push_str(&label);
-                res.push_str("\"");
+                format!("label=\"{:}\"",label)
             },
             GraphvizEdgeStyleItem::Head(arrow_head_style) => {
-                res.push_str("arrowhead=");
-                res.push_str(&(arrow_head_style.to_dot_string()));
+                format!("arrowhead={:}",arrow_head_style.to_dot_string())
             },
             GraphvizEdgeStyleItem::Tail(arrow_head_style) => {
-                res.push_str("arrowtail=");
-                res.push_str(&(arrow_head_style.to_dot_string()));
+                format!("arrowtail={:}",arrow_head_style.to_dot_string())
             },
             GraphvizEdgeStyleItem::Color(graphviz_color) => {
-                res.push_str("color=");
-                res.push_str(&(graphviz_color.to_dot_string()));
+                format!("color={:}",graphviz_color.to_dot_string())
             },
             GraphvizEdgeStyleItem::FontColor(graphviz_color) => {
-                res.push_str("fontcolor=");
-                res.push_str(&(graphviz_color.to_dot_string()));
+                format!("fontcolor={:}",graphviz_color.to_dot_string())
             },
             GraphvizEdgeStyleItem::ArrowSize(size) => {
-                res.push_str("arrowsize=");
-                res.push_str(&(size.to_string()));
+                format!("arrowsize={:}",size)
             },
             GraphvizEdgeStyleItem::FontSize(size) => {
-                res.push_str("fontsize=");
-                res.push_str(&(size.to_string()));
+                format!("fontsize={:}",size)
             }
         }
-        return res;
     }
 }
 

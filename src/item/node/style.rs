@@ -38,7 +38,7 @@ pub enum GvNodeStyleKind {
 impl DotTranslatable for GvNodeStyleKind {
     fn to_dot_string(&self) -> String {
         let as_static_str : &'static str = self.into();
-        return as_static_str.to_string().to_lowercase();
+        as_static_str.to_string().to_lowercase()
     }
 }
 
@@ -48,7 +48,7 @@ impl DotTranslatable for GvNodeStyle {
     fn to_dot_string(&self) -> String {
         let elements : Vec<String> = self.iter().map(
             |item| item.to_dot_string()).collect();
-        return format!("\"{}\"", elements.join(","));
+        format!("\"{}\"", elements.join(","))
     }
 }
 
@@ -80,7 +80,7 @@ pub enum GvNodeShape {
 impl DotTranslatable for GvNodeShape {
     fn to_dot_string(&self) -> String {
         let as_static_str : &'static str = self.into();
-        return as_static_str.to_string().to_lowercase();
+        as_static_str.to_string().to_lowercase()
     }
 }
 
@@ -106,54 +106,46 @@ pub enum GraphvizNodeStyleItem {
 
 impl DotTranslatable for GraphvizNodeStyleItem {
     fn to_dot_string(&self) -> String {
-        let mut res = String::new();
         match self {
             GraphvizNodeStyleItem::PenWidth(pw) => {
-                res.push_str(&format!("penwidth={:}",pw));
+                format!("penwidth={:}",pw)
             },
             GraphvizNodeStyleItem::Height(height) => {
-                res.push_str(&format!("height={:}",height));
+                format!("height={:}",height)
             },
             GraphvizNodeStyleItem::Width(width) => {
-                res.push_str(&format!("width={:}",width));
+                format!("width={:}",width)
             },
             GraphvizNodeStyleItem::Peripheries(per) => {
-                res.push_str(&format!("peripheries={:}",per));
+                format!("peripheries={:}",per)
             },
             GraphvizNodeStyleItem::Style(node_style) => {
-                res.push_str("style=");
-                res.push_str(&(node_style.to_dot_string()));
+                format!("style={:}",node_style.to_dot_string())
             },
             GraphvizNodeStyleItem::Shape(node_shape) => {
-                res.push_str("shape=");
-                res.push_str(&(node_shape.to_dot_string()));
+                format!("shape={:}",node_shape.to_dot_string())
             },
             GraphvizNodeStyleItem::Label(label) => {
-                res.push_str(&format!("label=\"{}\"",label));
+                format!("label=\"{}\"",label)
             },
             GraphvizNodeStyleItem::Image(imgpath) => {
-                res.push_str(&format!("imagescale=true;image=\"{}\"",imgpath));
+                format!("imagescale=true;image=\"{}\"",imgpath)
             },
             GraphvizNodeStyleItem::Color(graphviz_color) => {
-                res.push_str("color=");
-                res.push_str(&(graphviz_color.to_dot_string()));
+                format!("color={:}",graphviz_color.to_dot_string())
             },
             GraphvizNodeStyleItem::FillColor(graphviz_color) => {
-                res.push_str("style=filled;fillcolor=");
-                res.push_str(&(graphviz_color.to_dot_string()));
+                format!("style=filled;fillcolor={:}",graphviz_color.to_dot_string())
             },
             GraphvizNodeStyleItem::FontColor(graphviz_color) => {
-                res.push_str("fontcolor=");
-                res.push_str(&(graphviz_color.to_dot_string()));
+                format!("fontcolor={:}",graphviz_color.to_dot_string())
             },
             GraphvizNodeStyleItem::FontSize(size) => {
-                res.push_str("fontsize=");
-                res.push_str(&(size.to_string()));
+                format!("fontsize={:}",size)
             },GraphvizNodeStyleItem::FontName(fname) => {
-                res.push_str(&format!("fontname=\"{}\"",fname));
+                format!("fontname=\"{}\"",fname)
             }
         }
-        return res;
     }
 }
 

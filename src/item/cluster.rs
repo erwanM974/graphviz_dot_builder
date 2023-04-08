@@ -34,7 +34,7 @@ impl GraphVizCluster {
                style : GraphvizNodeStyle,
                items : Vec<Box<GraphVizGraphItem>>,
                edges : Vec<GraphVizEdge>) -> GraphVizCluster {
-        return GraphVizCluster{id,style,items,edges};
+        GraphVizCluster{id,style,items,edges}
     }
 }
 
@@ -48,31 +48,33 @@ impl DotTranslatable for GraphVizCluster {
         }
         // ***
         for item in &self.items {
-            res.push_str("\t");
+            res.push('\t');
             res.push_str(& item.to_dot_string() );
-            res.push_str("\n");
+            res.push('\n');
         }
         for edge in &self.edges {
-            res.push_str("\t");
+            res.push('\t');
             res.push_str(& edge.to_dot_string() );
-            res.push_str("\n");
+            res.push('\n');
         }
-        res.push_str("}");
-        return res;
+        res.push('}');
+        // ***
+        res
     }
 }
 
 
 impl RenameableWithPrefix for GraphVizCluster {
-    fn rename_with_prefix(&self, prefix: &String) -> Self {
+    fn rename_with_prefix(&self, prefix: &str) -> Self {
         let new_items : Vec<Box<GraphVizGraphItem>> = self.items.iter().map(
             |item| Box::new(item.rename_with_prefix(prefix))).collect();
         let new_edges : Vec<GraphVizEdge> = self.edges.iter().map(
             |edge| edge.rename_with_prefix(prefix)).collect();
-        return GraphVizCluster::new(format!("{}{}",prefix,self.id),
+        // ***
+        GraphVizCluster::new(format!("{}{}",prefix,self.id),
                                     self.style.clone(),
                                     new_items,
-                                    new_edges);
+                                    new_edges)
     }
 }
 

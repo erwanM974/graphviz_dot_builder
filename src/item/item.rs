@@ -28,23 +28,23 @@ impl DotTranslatable for GraphVizGraphItem {
     fn to_dot_string(&self) -> String {
         match self {
             GraphVizGraphItem::Cluster(cluster) => {
-                return cluster.to_dot_string();
+                cluster.to_dot_string()
             },
             GraphVizGraphItem::Node(node) => {
-                return node.to_dot_string();
+                node.to_dot_string()
             }
         }
     }
 }
 
 impl RenameableWithPrefix for GraphVizGraphItem {
-    fn rename_with_prefix(&self, prefix: &String) -> Self {
+    fn rename_with_prefix(&self, prefix: &str) -> Self {
         match self {
             GraphVizGraphItem::Cluster(cluster) => {
-                return GraphVizGraphItem::Cluster(cluster.rename_with_prefix(prefix));
+                GraphVizGraphItem::Cluster(cluster.rename_with_prefix(prefix))
             },
             GraphVizGraphItem::Node(node) => {
-                return GraphVizGraphItem::Node(node.rename_with_prefix(prefix));
+                GraphVizGraphItem::Node(node.rename_with_prefix(prefix))
             }
         }
     }

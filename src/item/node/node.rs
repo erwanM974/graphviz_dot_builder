@@ -28,7 +28,7 @@ pub struct GraphVizNode {
 impl GraphVizNode {
     pub fn new(id : String,
                style : GraphvizNodeStyle) -> GraphVizNode {
-        return GraphVizNode{id,style};
+        GraphVizNode{id,style}
     }
 }
 
@@ -36,17 +36,18 @@ impl DotTranslatable for GraphVizNode {
     fn to_dot_string(&self) -> String {
         let style : Vec<String> = self.style.iter().map(
             |item| item.to_dot_string()).collect();
-        if style.len() > 0 {
-            return format!("{} [{}];", self.id, style.join(","));
+
+        if style.is_empty() {
+            format!("{};", self.id)
         } else {
-            return format!("{};", self.id);
+            format!("{} [{}];", self.id, style.join(","))
         }
     }
 }
 
 impl RenameableWithPrefix for GraphVizNode {
-    fn rename_with_prefix(&self, prefix: &String) -> Self {
-        return GraphVizNode::new(format!("{}{}",prefix,self.id),self.style.clone());
+    fn rename_with_prefix(&self, prefix: &str) -> Self {
+        GraphVizNode::new(format!("{}{}",prefix,self.id),self.style.clone())
     }
 }
 

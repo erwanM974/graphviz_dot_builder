@@ -14,16 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-pub mod traits;
-pub mod colors;
-pub mod edge;
-pub mod item;
+pub mod style;
 pub mod graph;
 
-#[cfg(test)]
-mod tests {
+mod build;
+mod print;
 
-    #[ignore]
-    #[test]
-    fn test() {}
-}
+

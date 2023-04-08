@@ -14,16 +14,34 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+use std::fmt;
+use strum_macros::IntoStaticStr;
+
+
 use crate::item::node::node::GraphVizNode;
 use crate::item::cluster::GraphVizCluster;
 use crate::edge::edge::GraphVizEdge;
+
+#[allow(non_camel_case_types)]
+#[derive(IntoStaticStr, Clone, PartialEq, Debug, Eq, Hash)]
+pub enum GraphVizOutputFormat {
+    svg,
+    png
+}
+
+impl fmt::Display for GraphVizOutputFormat {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let as_static_str : &'static str = self.into();
+        write!(f, "{}", as_static_str)
+    }
+}
 
 pub trait DotTranslatable {
     fn to_dot_string(&self) -> String;
 }
 
 pub trait RenameableWithPrefix {
-    fn rename_with_prefix(&self, prefix : &String) -> Self;
+    fn rename_with_prefix(&self, prefix : &str) -> Self;
 }
 
 pub trait DotBuildable {
@@ -32,5 +50,12 @@ pub trait DotBuildable {
     fn add_edge(&mut self, edge : GraphVizEdge);
 }
 
+pub trait DotPrintable {
+
+    fn print_dot(&self,parent_folder_path : &[String],
+                 output_file_name : &str,
+                 output_file_format : &GraphVizOutputFormat) -> std::io::Result<std::process::Output>;
+
+}
 
 
