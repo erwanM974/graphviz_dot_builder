@@ -58,7 +58,7 @@ impl DotPrintable for GraphVizDiGraph {
         // ***
         let dot_buf : PathBuf = dot_file_path.iter().collect();
         let mut dot_file = File::create(dot_buf.as_path()).unwrap();
-        dot_file.write(self.to_dot_string().as_bytes());
+        let _ = dot_file.write(self.to_dot_string().as_bytes());
 
         let img_buf: PathBuf = image_file_path.iter().collect();
 

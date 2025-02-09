@@ -17,7 +17,6 @@ limitations under the License.
 use crate::traits::{DotTranslatable, RenameableWithPrefix, DotBuildable};
 use crate::edge::edge::GraphVizEdge;
 use crate::item::item::GraphVizGraphItem;
-use crate::item::node::node::GraphVizNode;
 use crate::item::node::style::GraphvizNodeStyle;
 
 
@@ -81,12 +80,8 @@ impl RenameableWithPrefix for GraphVizCluster {
 
 impl DotBuildable for GraphVizCluster {
 
-    fn add_node(&mut self, node : GraphVizNode) {
-        self.items.push(Box::new(GraphVizGraphItem::Node(node)));
-    }
-
-    fn add_cluster(&mut self, cluster : GraphVizCluster) {
-        self.items.push(Box::new(GraphVizGraphItem::Cluster(cluster)));
+    fn add_item(&mut self, item : GraphVizGraphItem) {
+        self.items.push(Box::new(item));
     }
 
     fn add_edge(&mut self, edge : GraphVizEdge) {

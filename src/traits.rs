@@ -18,6 +18,7 @@ use std::fmt;
 use strum_macros::IntoStaticStr;
 
 
+use crate::item::item::GraphVizGraphItem;
 use crate::item::node::node::GraphVizNode;
 use crate::item::cluster::GraphVizCluster;
 use crate::edge::edge::GraphVizEdge;
@@ -45,9 +46,15 @@ pub trait RenameableWithPrefix {
 }
 
 pub trait DotBuildable {
-    fn add_node(&mut self, node : GraphVizNode);
-    fn add_cluster(&mut self, cluster : GraphVizCluster);
+    fn add_item(&mut self, item : GraphVizGraphItem);
     fn add_edge(&mut self, edge : GraphVizEdge);
+    // ***
+    fn add_node(&mut self, node : GraphVizNode) {
+        self.add_item(GraphVizGraphItem::Node(node));
+    }
+    fn add_cluster(&mut self, cluster : GraphVizCluster) {
+        self.add_item(GraphVizGraphItem::Cluster(cluster));
+    }
 }
 
 pub trait DotPrintable {

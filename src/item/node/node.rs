@@ -21,8 +21,8 @@ use crate::traits::{DotTranslatable, RenameableWithPrefix};
 
 #[derive(Eq,PartialEq,Clone)]
 pub struct GraphVizNode {
-    pub id : String,
-    pub style : GraphvizNodeStyle
+    pub(crate) id : String,
+    pub(crate) style : GraphvizNodeStyle
 }
 
 impl GraphVizNode {

@@ -23,9 +23,9 @@ use crate::traits::RenameableWithPrefix;
 
 
 pub struct GraphVizDiGraph {
-    pub(crate) style : GraphvizGraphStyle,
-    pub(crate) items : Vec<GraphVizGraphItem>,
-    pub(crate) edges : Vec<GraphVizEdge>
+    pub style : GraphvizGraphStyle,
+    pub items : Vec<GraphVizGraphItem>,
+    pub edges : Vec<GraphVizEdge>
 }
 
 impl GraphVizDiGraph {
