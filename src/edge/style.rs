@@ -164,7 +164,8 @@ pub enum GraphvizEdgeStyleItem {
     Color(GraphvizColor),
     FontColor(GraphvizColor),
     ArrowSize(u32),
-    FontSize(u32)
+    FontSize(u32),
+    Constraint(bool)
 }
 
 impl DotTranslatable for GraphvizEdgeStyleItem {
@@ -193,6 +194,9 @@ impl DotTranslatable for GraphvizEdgeStyleItem {
             },
             GraphvizEdgeStyleItem::FontSize(size) => {
                 format!("fontsize={:}",size)
+            },
+            GraphvizEdgeStyleItem::Constraint(constraint) => {
+                format!("constraint={}",constraint)
             }
         }
     }

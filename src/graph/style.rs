@@ -36,9 +36,25 @@ impl DotTranslatable for GvGraphRankDir {
 }
 
 
+
+
+#[derive(IntoStaticStr,Eq,PartialEq,Clone)]
+pub enum GraphvizSplines {
+    None, // doesn't draw edges at all
+    Line, // draw edges as straight line, can be drawn over nodes
+    Curved, // draw edges as curved lines, can be drawn over nodes
+    Polyline, // draw edges as polylines, do not draw over nodes
+    Spline, // draw edges as straight or curved lines, do not draw over nodes
+    Ortho, // draw edges as several horizontal and vertical segments, do not draw over nodes
+}
+
+
 #[derive(Eq,PartialEq,Clone)]
 pub enum GraphvizGraphStyleItem {
-    Rankdir(GvGraphRankDir)
+    Rankdir(GvGraphRankDir),
+    NodeSep(u32,u32),
+    Concentrate(bool),
+    Splines(GraphvizSplines),
 }
 
 
@@ -48,6 +64,16 @@ impl DotTranslatable for GraphvizGraphStyleItem {
         match self {
             GraphvizGraphStyleItem::Rankdir(ref rd) => {
                 format!("rankdir={}", rd.to_dot_string())
+            },
+            GraphvizGraphStyleItem::NodeSep(unit,decimal) => {
+                format!("nodesep={}.{}", unit, decimal)
+            },
+            GraphvizGraphStyleItem::Concentrate(cnc) => {
+                format!("concentrate={}", cnc)
+            },
+            GraphvizGraphStyleItem::Splines(spline) => {
+                let spline_as_static_str : &'static str = spline.into();
+                format!("splines={}", spline_as_static_str.to_lowercase())
             }
         }
     }
